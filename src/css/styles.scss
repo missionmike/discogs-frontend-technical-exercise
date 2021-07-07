@@ -1,0 +1,24 @@
+body {
+  letter-spacing: 0.11rem;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  background-color: rgb(51, 51, 51);
+
+  h1 {
+    padding: 1rem;
+    width: 100%;
+    color: white;
+    font-weight: normal;
+  }
+
+  a {
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
+    color: white;
+  }
+}
