@@ -1,7 +1,7 @@
 import "./css/base.scss";
 
-import { ListReleases } from "./components/ListReleases";
+import { Main } from "./layout/Main";
 import React from "react";
 import ReactDOM from "react-dom";
 
-ReactDOM.render(<ListReleases />, document.getElementById("releases"));
+ReactDOM.render(<Main />, document.getElementById("main"));

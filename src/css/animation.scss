@@ -1,0 +1,29 @@
+/**
+ * Thank you @link https://codepen.io/ABSamma/pen/NWxpmNR
+ * for the inspiration
+ */
+@keyframes loader {
+  0% {
+    opacity: 0.25;
+    stroke-dasharray: 1 98;
+    stroke-dashoffset: -105;
+  }
+  50% {
+    opacity: 1;
+    stroke-dasharray: 80 10;
+    stroke-dashoffset: -160;
+  }
+  100% {
+    opacity: 0.25;
+    stroke-dasharray: 1 98;
+    stroke-dashoffset: -300;
+  }
+}
+
+#loader {
+  transform-origin: center;
+  animation-name: loader;
+  animation-duration: 1.8s;
+  animation-timing-function: cubic-bezier;
+  animation-iteration-count: infinite;
+}

@@ -1,24 +1,80 @@
-body {
-  letter-spacing: 0.11rem;
+html {
+  font-size: 16px;
+  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
-header {
-  display: flex;
-  flex-direction: row;
-  width: 100vw;
-  background-color: rgb(51, 51, 51);
+html,
+html * {
+  box-sizing: border-box;
+}
 
-  h1 {
-    padding: 1rem;
+body {
+  background-color: #eee;
+  letter-spacing: 0.01rem;
+  color: $textBase;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+a {
+  position: relative;
+  font-weight: bold;
+  text-decoration: none;
+  color: $accent1;
+  transition: color $transition1;
+  border-bottom: 1px solid transparent;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    color: white;
-    font-weight: normal;
+    height: 1px;
+    background-color: $accent2;
+    transform: scaleX(0);
+    transition: transform $transition1;
   }
 
-  a {
-    font-weight: bold;
-    text-decoration: underline;
-    text-underline-offset: 0.3rem;
-    color: white;
+  &:hover {
+    color: $accent2;
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.6rem;
+}
+
+strong {
+  font-weight: bold;
+}
+
+label {
+  font-size: 0.7rem;
+  color: $textLight;
+  margin-top: -1rem;
+  margin-bottom: 0.2rem;
+}
+
+input,
+select,
+textarea {
+  padding: 0.5rem;
+  min-width: 200px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+.form-field {
+  label {
+    display: block;
   }
 }
