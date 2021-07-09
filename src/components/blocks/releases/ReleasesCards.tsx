@@ -57,7 +57,7 @@ const CardCaption = styled.div`
   background-color: rgba(255, 255, 255, 0.9);
   transform: translateY(100%);
   opacity: 0;
-  transition: all 500ms ease;
+  transition: all 200ms ease;
 
   div {
     padding: 0.5rem;
@@ -77,7 +77,15 @@ const ReleasesCards = ({ releases }: { releases: IRelease[] }) => {
       {releases.map((release, index) => {
         return (
           <Card key={`release-card-${index}`}>
-            <a href={`https://www.discogs.com/release/${release.id}`}>
+            {/**
+             * _blank, noopener and nofollow included below
+             * to avoid any impact on analytics
+             */}
+            <a
+              href={`https://www.discogs.com/release/${release.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img
                 src={release.thumb}
                 alt={`Album cover art for ${release.artist}, ${release.title}`}
