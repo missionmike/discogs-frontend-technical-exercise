@@ -1,9 +1,11 @@
+import { AnimatePresence, motion } from "framer-motion";
+
 import { IRelease } from "../../../types/interfaces";
 import { Loader } from "../../../components";
 import React from "react";
 import styled from "@emotion/styled";
 
-const CardsContainer = styled.section`
+const CardsContainer = styled(motion.section)`
   display: grid;
   min-height: 100%;
   padding: 1rem;
@@ -12,7 +14,7 @@ const CardsContainer = styled.section`
   gap: 1rem 1rem;
 `;
 
-const Card = styled.div`
+const Card = styled(motion.div)`
   position: relative;
   overflow: hidden;
   background: black;
@@ -44,10 +46,10 @@ const Card = styled.div`
 `;
 
 const CardCaption = styled.div`
-  display: grid;
+  display: block;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 2fr;
-  gap: 0.5rem 0.5rem;
+  gap: 0.1rem 0.1rem;
 
   position: absolute;
   bottom: 0;
@@ -55,12 +57,10 @@ const CardCaption = styled.div`
   width: 100%;
   height: auto;
   background-color: rgba(255, 255, 255, 0.9);
-  transform: translateY(100%);
-  opacity: 0;
   transition: all 200ms ease;
 
   div {
-    padding: 0.5rem;
+    padding: 0.5rem 0.2rem;
   }
 
   p {
@@ -71,46 +71,62 @@ const CardCaption = styled.div`
 `;
 
 const ReleasesCards = ({ releases }: { releases: IRelease[] }) => {
+  const containerVariant = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 2,
+      },
+    },
+  };
+  const cardVariant = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1 },
+  };
   return (
-    <CardsContainer>
-      {releases.length < 1 && <Loader />}
-      {releases.map((release, index) => {
-        return (
-          <Card key={`release-card-${index}`}>
-            {/**
-             * _blank, noopener and nofollow included below
-             * to avoid any impact on analytics
-             */}
-            <a
-              href={`https://www.discogs.com/release/${release.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src={release.thumb}
-                alt={`Album cover art for ${release.artist}, ${release.title}`}
-              />
-              <CardCaption className="card-caption">
-                <div>
-                  <p>
-                    <strong>{release.title}</strong>
-                    <br />
-                    {release.artist}
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    <strong>{release.year}</strong>
-                    <br />
-                    {release.catno}
-                  </p>
-                </div>
-              </CardCaption>
-            </a>
-          </Card>
-        );
-      })}
-    </CardsContainer>
+    <AnimatePresence>
+      <CardsContainer
+        variants={containerVariant}
+        initial="hidden"
+        animate="show"
+      >
+        {releases.length < 1 && <Loader />}
+        {releases.map((release, index) => {
+          return (
+            <Card key={`release-card-${index}`} variants={containerVariant}>
+              {/**
+               * _blank, noopener and nofollow included below
+               * to avoid any impact on analytics
+               */}
+              <a
+                href={`https://www.discogs.com/release/${release.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src={release.thumb}
+                  alt={`Album cover art for ${release.artist}, ${release.title}`}
+                />
+                <CardCaption className="card-caption">
+                  <div>
+                    <p>
+                      <strong>{release.title}</strong>
+                      <br />
+                      {release.artist} ({release.year})
+                      <br />
+                      <span style={{ fontSize: `0.8em` }}>
+                        <em>#{release.catno.replace("#", "")}</em>
+                      </span>
+                    </p>
+                  </div>
+                </CardCaption>
+              </a>
+            </Card>
+          );
+        })}
+      </CardsContainer>
+    </AnimatePresence>
   );
 };
 

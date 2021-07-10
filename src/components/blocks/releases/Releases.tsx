@@ -30,14 +30,10 @@ const Releases = ({
     }, 1500);
   }, []);
 
-  useEffect(() => {
-    console.log(releases);
-  }, [releases]);
-
   return (
     <ReleasesContainer>
       <ReleasesHeader {...{ labelData, releases, setReleases }} />
-      <ReleasesCards releases={releases} />
+      <ReleasesCards {...{ releases }} />
     </ReleasesContainer>
   );
 };
@@ -49,33 +45,54 @@ const sortReleases = ({
   method?: string;
   releases: IRelease[];
 }) => {
+  function ascending(a: string | number, b: string | number) {
+    if (a < b) {
+      return -1;
+    } else if (a > b) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
   switch (method) {
     case "name-az":
       releases.sort(function (a, b) {
-        if (a.title < b.title) {
-          return -1;
-        } else if (a.title > b.title) {
-          return 1;
-        } else {
-          return 0;
-        }
+        return ascending(a.title, b.title);
       });
       break;
     case "name-za":
       releases
         .sort(function (a, b) {
-          if (a.title < b.title) {
-            return -1;
-          } else if (a.title > b.title) {
-            return 1;
-          } else {
-            return 0;
-          }
+          return ascending(a.title, b.title);
+        })
+        .reverse();
+      break;
+    case "artist-az":
+      releases.sort(function (a, b) {
+        return ascending(a.artist, b.artist);
+      });
+      break;
+    case "artist-za":
+      releases
+        .sort(function (a, b) {
+          return ascending(a.artist, b.artist);
+        })
+        .reverse();
+      break;
+    case "year-oldest":
+      releases.sort(function (a, b) {
+        return ascending(a.year, b.year);
+      });
+      break;
+    case "year-newest":
+      releases
+        .sort(function (a, b) {
+          return ascending(a.year, b.year);
         })
         .reverse();
       break;
   }
-  console.log(method, releases);
   return releases;
 };
 
