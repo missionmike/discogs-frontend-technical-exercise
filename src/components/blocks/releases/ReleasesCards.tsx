@@ -71,30 +71,18 @@ const CardCaption = styled.div`
 `;
 
 const ReleasesCards = ({ releases }: { releases: IRelease[] }) => {
-  const containerVariant = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 2,
-      },
-    },
-  };
-  const cardVariant = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1 },
-  };
   return (
     <AnimatePresence>
-      <CardsContainer
-        variants={containerVariant}
-        initial="hidden"
-        animate="show"
-      >
+      <CardsContainer>
         {releases.length < 1 && <Loader />}
         {releases.map((release, index) => {
           return (
-            <Card key={`release-card-${index}`} variants={containerVariant}>
+            <Card
+              key={`release-card-${index}`}
+              animate={{ opacity: 1 }}
+              initial={{ opacity: 0 }}
+              transition={{ delay: index * 0.05 }}
+            >
               {/**
                * _blank, noopener and nofollow included below
                * to avoid any impact on analytics
