@@ -36,8 +36,8 @@ The finished solution should:
 
 - The interface should have a loading state and handle potential API errors.
 
-  - \_Includes loading state
-  - Does not validate data from API... time allowing, I'd add try/catch blocks, verify all data is clean, and use some mechanism to report errors back to the server or via Sentry.io\_
+  - _Includes loading state_
+  - _Does not validate data from API... time allowing, I'd add try/catch blocks, verify all data is clean, and use some mechanism to report errors back to the server or via Sentry.io_
 
 - Implement good WAI-ARIA practices where applicable.
   - _Passes Lighthouse accessibility tests, but more attention could be given to manual testing)_
