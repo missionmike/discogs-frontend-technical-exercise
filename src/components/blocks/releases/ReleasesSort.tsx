@@ -10,8 +10,8 @@ const ReleasesSort = ({
   setReleases: Function;
 }) => {
   const onChange = (e) => {
-    let method = e?.target?.value;
-    method && setReleases([...sortReleases({ method, releases })]);
+    let sortMethod = e?.target?.value;
+    sortMethod && setReleases([...sortReleases({ sortMethod, releases })]);
   };
 
   return (

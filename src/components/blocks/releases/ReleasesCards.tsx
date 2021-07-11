@@ -1,86 +1,34 @@
 import { AnimatePresence, motion } from "framer-motion";
+import {
+  ReleasesCard,
+  ReleasesCardCaption,
+  ReleasesCardsContainer,
+} from "./ReleasesStyledComponents";
 
 import { IRelease } from "../../../types/interfaces";
 import { Loader } from "../../../components";
 import React from "react";
-import styled from "@emotion/styled";
-
-const CardsContainer = styled(motion.section)`
-  display: grid;
-  min-height: 100%;
-  padding: 1rem;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 1rem 1rem;
-`;
-
-const Card = styled(motion.div)`
-  position: relative;
-  overflow: hidden;
-  background: black;
-
-  a {
-    display: block;
-    width: 100%;
-    height: 100%;
-    color: inherit;
-  }
-
-  img {
-    object-fit: cover;
-    width: 100%;
-    height: auto;
-    transition: all 500ms ease;
-    transform: scale(1);
-  }
-
-  &:hover {
-    img {
-      transform: scale(1.1);
-    }
-    .card-caption {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-`;
-
-const CardCaption = styled.div`
-  display: block;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 2fr;
-  gap: 0.1rem 0.1rem;
-
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: auto;
-  background-color: rgba(255, 255, 255, 0.9);
-  transition: all 200ms ease;
-
-  div {
-    padding: 0.5rem 0.2rem;
-  }
-
-  p {
-    font-weight: normal;
-    font-size: 0.9rem;
-    line-height: 1.1rem;
-  }
-`;
 
 const ReleasesCards = ({ releases }: { releases: IRelease[] }) => {
   return (
     <AnimatePresence>
-      <CardsContainer>
+      <ReleasesCardsContainer>
         {releases.length < 1 && <Loader />}
         {releases.map((release, index) => {
+          /**
+           * randomKey is needed as a workaround for this issue:
+           * @link https://github.com/framer/motion/issues/968
+           */
+          let randomKey = Math.round(Math.random() * 10000);
+
           return (
-            <Card
-              key={`release-card-${index}`}
-              animate={{ opacity: 1 }}
-              initial={{ opacity: 0 }}
+            <ReleasesCard
+              key={`release-card-${index}-${randomKey}`}
+              animate={{ opacity: 1, translateY: 0 }}
+              initial={{
+                opacity: 0,
+                translateY: 20,
+              }}
               transition={{ delay: index * 0.05 }}
             >
               {/**
@@ -96,7 +44,7 @@ const ReleasesCards = ({ releases }: { releases: IRelease[] }) => {
                   src={release.thumb}
                   alt={`Album cover art for ${release.artist}, ${release.title}`}
                 />
-                <CardCaption className="card-caption">
+                <ReleasesCardCaption className="card-caption">
                   <div>
                     <p>
                       <strong>{release.title}</strong>
@@ -108,12 +56,12 @@ const ReleasesCards = ({ releases }: { releases: IRelease[] }) => {
                       </span>
                     </p>
                   </div>
-                </CardCaption>
+                </ReleasesCardCaption>
               </a>
-            </Card>
+            </ReleasesCard>
           );
         })}
-      </CardsContainer>
+      </ReleasesCardsContainer>
     </AnimatePresence>
   );
 };
