@@ -43,6 +43,8 @@ const ReleasesCards = ({ releases }: { releases: IRelease[] }) => {
                 <img
                   src={release.thumb}
                   alt={`Album cover art for ${release.artist}, ${release.title}`}
+                  width="200"
+                  height="200"
                 />
                 <ReleasesCardCaption className="card-caption">
                   <div>
