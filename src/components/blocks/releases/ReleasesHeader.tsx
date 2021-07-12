@@ -1,34 +1,8 @@
 import { ILabel, IRelease } from "../../../types/interfaces";
 
 import React from "react";
+import { ReleasesHeaderContainer } from "./ReleasesStyledComponents";
 import { ReleasesSort } from "./ReleasesSort";
-import styled from "@emotion/styled";
-
-const Header = styled.header`
-  position: sticky;
-  top: 0;
-  z-index: 9;
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px);
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  justify-content: space-between;
-  width: 100%;
-  padding: 1rem;
-
-  @media screen and (max-width: 650px) {
-    flex-direction: column;
-
-    h1 {
-      margin-bottom: 2rem;
-    }
-
-    select {
-      width: 100%;
-    }
-  }
-`;
 
 const ReleasesHeader = ({
   labelData,
@@ -40,7 +14,7 @@ const ReleasesHeader = ({
   setReleases: Function;
 }) => {
   return (
-    <Header>
+    <ReleasesHeaderContainer>
       <h1>
         Releases from{" "}
         {/**
@@ -52,7 +26,7 @@ const ReleasesHeader = ({
         </a>
       </h1>
       <ReleasesSort {...{ releases, setReleases }} />
-    </Header>
+    </ReleasesHeaderContainer>
   );
 };
 

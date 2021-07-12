@@ -1,6 +1,10 @@
+import {
+  sortArrayByObjectKeyAscending,
+  sortArrayByObjectKeyDescending,
+} from "../../../helpers/utilities";
+
 import { IRelease } from "../../../types/interfaces";
 import React from "react";
-import { sortReleases } from "./Releases";
 
 const ReleasesSort = ({
   releases,
@@ -10,8 +14,15 @@ const ReleasesSort = ({
   setReleases: Function;
 }) => {
   const onChange = (e) => {
-    let sortMethod = e?.target?.value;
-    sortMethod && setReleases([...sortReleases({ sortMethod, releases })]);
+    let sort =
+        e?.target?.selectedOptions[0].getAttribute("data-sort") === "descending"
+          ? sortArrayByObjectKeyDescending
+          : sortArrayByObjectKeyAscending,
+      key = e?.target?.selectedOptions[0].getAttribute("data-key");
+
+    key && setReleases([...sort(releases, key)]);
+
+    document && document.body.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -21,12 +32,24 @@ const ReleasesSort = ({
         <option value="" disabled>
           Sort by Year, A-Z
         </option>
-        <option value="name-az">Release Name, A-Z</option>
-        <option value="name-za">Release Name, Z-A</option>
-        <option value="artist-az">Artist Name, A-Z</option>
-        <option value="artist-za">Artist Name, Z-A</option>
-        <option value="year-oldest">Release Year, Oldest First</option>
-        <option value="year-newest">Release Year, Newest First</option>
+        <option value="title-az" data-sort="ascending" data-key="title">
+          Release Title, A-Z
+        </option>
+        <option value="title-za" data-sort="descending" data-key="title">
+          Release Title, Z-A
+        </option>
+        <option value="artist-az" data-sort="ascending" data-key="artist">
+          Artist Name, A-Z
+        </option>
+        <option value="artist-za" data-sort="descending" data-key="artist">
+          Artist Name, Z-A
+        </option>
+        <option value="year-oldest" data-sort="ascending" data-key="year">
+          Release Year, Oldest First
+        </option>
+        <option value="year-newest" data-sort="descending" data-key="year">
+          Release Year, Newest First
+        </option>
       </select>
     </div>
   );

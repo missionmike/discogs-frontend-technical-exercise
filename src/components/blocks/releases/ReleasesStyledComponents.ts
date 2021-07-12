@@ -63,10 +63,6 @@ const ReleasesCard = styled(motion.div)`
 
 const ReleasesCardCaption = styled.div`
   display: block;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 2fr;
-  gap: 0.1rem 0.1rem;
-
   position: absolute;
   bottom: 0;
   left: 0;
@@ -86,9 +82,36 @@ const ReleasesCardCaption = styled.div`
   }
 `;
 
+const ReleasesHeaderContainer = styled.header`
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  justify-content: space-between;
+  width: 100%;
+  padding: 2rem 1rem 1rem 1rem;
+
+  @media screen and (max-width: 650px) {
+    flex-direction: column;
+
+    h1 {
+      margin-bottom: 2rem;
+    }
+
+    select {
+      width: 100%;
+    }
+  }
+`;
+
 export {
   ReleasesContainer,
   ReleasesCardsContainer,
   ReleasesCard,
   ReleasesCardCaption,
+  ReleasesHeaderContainer,
 };
